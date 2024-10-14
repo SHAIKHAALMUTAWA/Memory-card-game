@@ -15,8 +15,6 @@ let firstCard, secondCard;
 let currentCardSelected;
 
 function flipCard(event) {
-    
-
     if (lockBoard) return;
     if (this === firstCard) return;
 
@@ -58,7 +56,6 @@ function unflipCards() {
     setTimeout(() => {
         firstCard.classList.remove('flip');
         secondCard.classList.remove('flip');
-
         resetBoard();
     }, 1500);
 }
@@ -77,10 +74,57 @@ function resetBoard() {
 
 cards.forEach(card => card.addEventListener('click', flipCard));
 
+function showWinMessage() {  
+    alert("You Win!");  
+} 
 
-// WIN GAME
-// when all the cards in the cards variable have the class flip
-// make function called checkWin
-// fn  loops through all the cards -- see line 78  but we dont add event listener
-// every , you will check the classlist to see if it contains the class flip. 
-// next make a function that shows a you win message. 
+
+function checkWin() {
+    const allFlipped = Array.from(cards).every(card => card.classList.contains('flip'))
+
+
+    if (allFlipped) {
+      showWinMessage();
+    }
+  }
+  function disableCards() {
+    firstCard.removeEventListener('click', flipCard);
+    secondCard.removeEventListener('click', flipCard);
+    currentCardSelected = '';
+
+    checkWin();
+    resetBoard();
+  }function showWinMessage() {
+    alert("You Win!");
+  }
+  
+
+
+  function flipAllCards() {
+    cards.forEach(card => card.classList.add('flip'));
+    setTimeout(() => {
+      cards.forEach(card => card.classList.remove('flip'));
+    }, 2000); // Adjust the time as needed
+  }
+  
+  window.onload = flipAllCards;
+  
+  function flipAllCards() {
+    cards.forEach(card => card.classList.add('flip'));
+    setTimeout(() => {
+      cards.forEach(card => card.classList.remove('flip'));
+    }, 2000); // Adjust the time as needed
+  }
+  
+  window.onload = flipAllCards;
+  
+  function disableCards() {
+    firstCard.removeEventListener('click', flipCard);
+    secondCard.removeEventListener('click', flipCard);
+    currentCardSelected = '';
+  
+    checkWin();
+    resetBoard();
+  }
+
+  
